@@ -1,0 +1,131 @@
+%\subsection{Filtering unusual events and topics}
+\subsection{Abnormality Estimation using Seasonal-Trend Decomposition}
+\label{subsec:filtering}
+Abnormal events are those that do not happen frequently and usually they cover only a small fraction of the social media data stream.
+As shown in Table~\ref{T:TopicProportion}, even during an earthquake episode, highly ranked topics consist of ordinary and unspecific words.
+The third and fourth ranked topics include words indicating the earthquake event of August 2011:
+\textit{earthquake felt quake washington}.
+%In the analysis of social media data, one of the most challenging problems is the extraction of 
+%valuable and critical information as the size of data and the quality of the information 
+%have high variance~\cite{Agichtein:2008:FHC}. 
+%drastically vary according to users~\cite{Agichtein:2008:FHC}. 
+%In addition, a relatively small subset within the data may be easily obscured by large subsets,
+%although the smaller subset contains valuable information.
+%Table~\ref{T:TopicProportion} shows the extracted topics from Tweets written during the event date, 
+%August 23rd 2011 when an earthquake struck the Virginia area.
+%We carried out a series of experiments to extract topics from Tweets in the seven days prior to the event date.
+%We found that common topics, such as \textit{day back school today},  
+%still made a majority of the data over the seven days,
+%and there were no topics related to the earthquake event.
+From this observation in the distributions of ordinary and unusual topics over the social media data,
+it is necessary to differentiate the unusual topics from the large number of rather mundane topics.
+In order to identify such abnormal topics, %indicating unexpected situations and unusual social issues,
+we utilize the STL~\cite{Cleveland:1990:SAS}.
+For each extracted topic of the LDA topic modeling, our algorithm retrieves messages associated with the topic and then generates a time series consisting of daily message counts from their timestamps.
+%and discard regular trend and seasonal components.
+%we generate a time series for the each topic. 
+%
+The time series can be considered as the sum of three components: a trend component, a seasonal 
+component, and a remainder:
+%
+\begin{equation}
+Y = T + S + R
+%Y_t = T_t + S_t + R_t
+\end{equation}
+%
+Here $Y$ is the original time series of interest, 
+%where for the day $t$, $Y_t$ is the original time series of interest, 
+%(in our case the amount of messages belonging to the extracted topic on day $t$)
+$T$ is the trend component,
+$S$ is the seasonal component,
+and $R$ is the remainder component.
+%
+%repetition
+%The STL decomposes a time series into these separated components using the Loess smoothing technique, 
+%which was developed by Cleveland~\cite{Cleveland:1979:RLW} and it has been widely used in time varying data analysis.
+STL works as an iterative nonparametric regression procedure using a series of Loess smoothers~\cite{Cleveland:1979:RLW}.
+%The nature of STL allows us to robustly mode the time series, account for the various components, 
+%and diagnose the irregular component. 
+The iterative algorithm progressively refines and improves the estimates of the trend 
+and the seasonal components.
+The resulting estimates of both components are then used to compute the remainder:
+$R = Y - T - S$.
+%$R_t = Y_t - T_t - S_t$.
+%\textbf{Control chart based abnormality determination:}
+Under normal conditions, the remainder will be identically distributed Gaussian white noise, while a large value of $R$ indicates substantial variation in the time series. 
+Thus, we can utilize the remainder values to implement control chart methods detecting anomalous outliers 
+within the topic time series.
+We have chosen to utilize a seven day moving average of the remainder values to calculate the z-scores, 
+$z = (R(d) - mean)/std$, where $R(d)$ is the remainder value of day $d$, $mean$ is the mean remainder value for the last seven days, and $std$ is the standard deviation of the remainders,
+with respect to each topic.  
+If the z-score is higher than 2, events can be considered as abnormal within a 95\% confidence interval.
+The calculated z-scores are thus used as abnormality rating and the retrieved topics will be ranked in the analytics environment according to this estimate.
+%However, in this scheme, new topics do not have enough data to extract z-scores.  Thus, brand new topics are moved to the top of the topic stream list as they may also be important for the analyst.
+
+%In order to stabilized, improve the interpretability, and appropriately model the time series
+%using STL, a power transformation is applied.
+%In analysis of the data, we used the logarithm transformation, which is widely used 
+%for positive time series data.
+%[To do: How to set the parameters in using STL]
+%[To do: our results and description]
+
+%\subsection{Anaysis of multipe social media data}
+\subsection{Detection Model}
+\label{subsec:analysis_multi_social}
+To conclude this section, we formalize our abnormal event detection model based on the probabilistic topic extraction and time series decomposition.
+
+An abnormal event is associated with a set of social media messages that provides
+its contents, location, and time-stamp.
+To detect abnormal events for a given area and timespan,
+we define a set called \textit{social spacetime} as follows:
+\begin{equation}
+S = (T, \Delta{time}, \Delta{area}, msgs)
+\end{equation}
+where $T$ is a set of topics,
+$\Delta{time}$ is a time period (e.g., one day),
+$\Delta{area}$ is a bounded geographical region, 
+and $msgs$ is a set of messages.
+The user selected parameters $\Delta{area}$ and $\Delta{time}$ define the analysis context for which all messages are loaded into the analysis system.
+In this context, the user selects a subset of messages ($msgs$) for which the LDA topic modeling procedure (described in Section~\ref{subsec:topic_extraction}) extracts the set of topics, $t_i \in T$. 
+Each topic is defined as:
+\begin{equation}
+t_i = (M_i, W_i, z_i, Y_i, p_i)
+\end{equation}
+where 
+$W_i$ is a set of words describing the topic, 
+$M_i$ is a set of relevant messages,
+$z_i$ is an abnormality score (z-score), 
+$Y_i$ is a time series, 
+and 
+$p_i$ is a statistical proportion of the topic in $msgs$.
+%$p_i$ is the proportion $|M_i \cap msgs| / |msgs|$.
+
+For each topic ($t_i$), our algorithm searches relevant messages ($M_i$) in the selected area ($\Delta{area}$) and time period ($\Delta{time}$) and a predefined time span of historic data preceding $\Delta{time}$ (e.g. one month).
+Messages are considered relevant if they contain at least one word in $W_i$.
+From $M_i$ a daily message count time series ($Y_i$) is generated from the timestamps of the messages.
+The algorithm decomposes $Y_i$ to obtain a remainder component series using the STL 
+and calculates a z-score ($z_i$) from the remainder series.
+Lastly, it sorts the topics based on the z-scores.
+
+% comment: no need to repeat it twice, therefore I merged Flickr and YouTube to one description
+For cross validation of each topic, we search for relevant entries in Flickr and YouTube by their meta-data 
+that includes titles, descriptions, tags, and timestamps, using the respective APIs.
+We repeat the steps for generating a time series from the collected timestamps, applying STL to decompose the time series,
+and calculating the z-score from the remainder component series.
+
+%We then apply our seasonal-trend decomposition based abnormality estimation algorithm to the time series to obtain $z_i$ and
+%we order the set of topics daily based on $z_i$.
+
+%Once a set of topics sorted by the abnormalities, we apply this abnormality estimation approach
+%to other social media.
+
+%%$S = (T, [M_1, M_2, ... , M_n], Tweets, \delta{t}, area)$
+%For a given topic comprised several high related words for the topic, 
+%our algorithm we search tweets that include one of the
+%words within the topic.
+%
+%
+%Then, we decompose the natural logarithm of the daily tweet count into a trend component, 
+%a seasonal component, and a remainder, sometimes referred to as the irregular component. 
+%We estimate abnormalities of the topics based on the 
+%

@@ -1,0 +1,96 @@
+\chapter{Visual Analytics of Spatiotemporal Social Media for Abnormal Event Detection}
+
+%Many social media services have emerged in the past years 
+%and they provide different types of information according to the purpose of the services.
+Social media services, e.g, Twitter, Youtube, Flickr, provide a rich and freely accessible 
+database of user-generated situation reports. As advances in technology have enabled
+%and the user information tends to contain mainly 
+%user's spatial and temporal information while the social media content is being generated.
+%Since smart mobile devices became popular recently,
+%it is even easier to produce lots of social media data anywhere and anytime. 
+%mobility of the 
+the widespread adoption of GPS enabled mobile communication
+devices, these reports are able to capture important local events observed by an active and ubiquitous community.
+The different forms of social media content provided by the users,
+such as microposts, images or video footage, can have immense value 
+for increasing the situational awareness of ongoing events.
+
+% However, as data volumes have increased beyond the capabilities of manual evaluation, 
+% there is a need for advanced tools %plays an important role to provide
+% as a means to provide insights for investigation and to understand the extent, 
+% severity and consequences of incidents, as well as their time-evolving nature.
+% Due to the large number of individual social media messages it is not straightforward 
+% to analyze and extract meaningful information. 
+% For example, in Twitter, more than 200 million Tweets are posted each day~\cite{Tweets:2011:Twitter}.
+% %and a billion Tweets are created
+% %every five days as of June 30, 2011.
+% Thus, in an ongoing scenario, the relevant messages for situational awareness are usually buried by
+% a majority of irrelevant data. 
+% Finding and examining these messages without smart aggregation, automated text analysis and 
+% advanced filter strategies is almost impossible and extracting meaningful information is even more challenging.
+
+However, as data volumes have increased beyond the capabilities of manual evaluation, there is a need for
+advanced tools to aid understanding of the extent, severity and consequences of incidents, 
+as well as their time-evolving nature, and to aid in gleaning investigative insights. 
+Due to the large number of individual social media messages it is not straightforward to analyze and extract meaningful information. 
+For example, in Twitter, more than 200 million Tweets are posted each day~\cite{Tweets:2011:Twitter}. 
+Thus, in a developing event, the relevant messages for situational awareness are usually buried by a majority of irrelevant data. Finding and examining these messages
+without smart aggregation, automated text analysis and advanced filtering strategies is almost impossible and
+extracting meaningful information is even more challenging.
+
+%Another issue is reliability of the data.
+%Posts might be outdated, incorrect, or simply unimportant
+%and this can heavily interfere with searching for meaningful information. 
+%Previously researchers have focused
+%on finding spatial and temporal trends according to volume-based importance.
+%In other words, a large volume of keywords or content is considered to be more important.
+%This type of analysis can cause relatively small volumes of important data to be easily obscured.
+%by huge amount of data
+%which tends to indicate normal situations, but
+%abnormality within a small volume of data can provide more critical and important information for unusual events.
+
+To address these challenges, we present an interactive spatiotemporal social media analytics approach
+for abnormal topic detection and event examination~\cite{CHAE:2012:SSM}.
+In order to find relevant information within a user defined spatiotemporal frame
+%within the social media data, 
+we utilize the LDA topic model~\cite{Blei:2003:LDA}, which extracts 
+and probabilistically ranks major topics contained in textual parts of the social media data.
+%The abnormality is estimated from the major topical events.
+The ranks of the categorized topics generally provide a volume-based importance,
+but this importance does not reflect the abnormality or criticality of the topic. 
+In order to obtain a ranking suitable for situational awareness tasks, we discard daily chatter
+by employing the STL~\cite{Cleveland:1990:SAS}.
+%based on the abnormality estimation.
+In our work, globally and seasonally trending portions of the data are considered less important,
+whereas major non-seasonal elements are considered anomalous and, therefore, relevant.
+
+However, due to the large volumes of data, the very specific syntax and semantics of microposts and 
+the complex needs of situational analysis, it would not be feasible to apply these techniques 
+in the form of a fully automated system. 
+Therefore, our whole analysis process, including the application of automated tools, is guided and 
+informed by an analyst using a highly interactive visual analytics environment. 
+It provides tight integration of semi-automated text-analysis and probabilistic event detection tools 
+together with traditional zooming, filtering and exploration following the Information-Seeking Mantra~\cite{Shneiderman:1996:TEH}.
+
+%We apply our techniques to various social media data sources, including Twitter, Flickr, and YouTube,
+%to improve reliability of the 
+%as a way of testing our abnormality detection scheme. 
+%Moreover, it is possible to compare and analyze which information users post according to
+%the social media services.
+%Finally, our geovisual analytics system is used for situational awareness of
+%abnormality within social media data and enables a scalable
+%visual examination and highly interactive visual analysis workbench for spatiotemporal trend analysis.
+%interactive capability of spatiotemporal trend analysis. 
+%The remainder of this document is structured as follows: 
+%Section~\ref{sec:relatedwork} is a review of related work.
+%The automated methods to find and examine unusual topics and events are described in Section~\ref{sec:social_analytics}.
+%In Section~\ref{sec:analysisprocess} we briefly introduce our visual analytics system Scatterblogs, which was already featured in previous works, and explain how the automated methods are integrated within a sophisticated iterative analysis loop.
+%Finally we demonstrate the performance of our system based on selected case studies in Section~\ref{sec:case_study} and discuss the approach in Section~\ref{sec:disc}.
+
+\input{ad_process}
+\input{ad_LDA}
+\input{ad_STL}
+\input{ad_analysis}
+\input{ad_casestudy}
+\input{ad_conclusion}
+

@@ -1,0 +1,49 @@
+\section{Discussion}
+\label{sec:disc}
+In this section we want to discuss four important notes and observations relevant to the presented approach.
+
+\textbf{Event Types:} As was demonstrated with the three case studies, events in social media can be categorized into two different types. 
+The 2011 Virginia Earthquake and the Ohio High School Shooting can be categorized as abrupt or disaster events,
+while Occupy Wall Street can be considered a social and planned event.
+The two types of events have quite distinguishable features.
+For the abrupt events, there is a strong change in daily counts mainly in the text based Twitter messages.
+For the planned event, the Twitter signal may still be faster, but due to the gradual increase and decrease, it is less pronounced.
+In contrast, Flickr and YouTube have delayed, but very prominent changes, for planned events; 
+however, we could not find significant signals for abrupt events.
+This reflects that video and photo recording happen rarely during abrupt events.
+Social events, e.g., Occupy Wall Street or election debates, however, have a high impact on such multimedia based social media; 
+Relevant videos, photos, and even meta-data (e.g., descriptions, tags) allow analysts to find additional information about them.
+We, therefore, think that cross validating events among multiple social media types is important in order to establish situational awareness.
+
+\textbf{Base Data:} Regarding the base data, it is important to note, that our approach depends on geo-located Twitter messages with precise coordinates, which are only a fraction of the whole Twitter stream.
+While this fraction still consists of several million messages per day, 
+it is not a representative sample of the population, because it mainly covers mobile users equipped with GPS enabled devices.
+We think, however, that mobile users, who share their daily experiences freely, are the most relevant group for situational awareness scenarios.
+Some studies~\cite{Cheng:2010:YYT, Jalal:2012:WIT} tried to overcome the problem of location information scarcity in Twitter messages, which adds another source of uncertainty.
+First, the user's self reported locations can be outdated.
+Second, the geo-coding of the location can be considerably wrong due to place name ambiguities.
+Furthermore, we have just shown the feasibility of the approach for Twitter, Flickr, and YouTube data, but it can easily be adapted to other social media providers like Facebook or Forsquare as well, in order to widen the sample of the population.
+
+\textbf{Probabilistic Models:} In this work, we use STL to decompose time series of topic streams.
+There are many alternative statistical models for this task, such as DHR (Dynamic Harmonics Regression)~\cite{Young:1999:DHR} and SARIMA (Seasonal AutoRegressive Intergrated Moving Average)~\cite{Box:1990:TSA}.
+DHR and SARIMA models are particularly useful for forecasting and STL can also be used for prediction based on seasonal (periodic) time series~\cite{Jiang:2010:MML}.
+Our main reasons for choosing STL was the fact that it is non-parametric, can be computed faster than SARIMA~\cite{Jiang:2010:MML} and needs less training data for equally good results.
+
+\textbf{End User Feedback:} We requested informal feedback from users within our institutes and received comments and suggestions. 
+To compare the LDA topic modeling plus the seasonal-decomposition based abnormality analysis versus only the LDA topic modeling, we enabled our system to switch between these modes. 
+The users were impressed by the fact that both results (two lists of topics) from two different modes were quite different. 
+Highly ranked topics by LDA topic modeling consisted of ordinary words, while the combined analysis was indicating unusual events. 
+They noted that the tightly integrated visual analysis workbench was useful to apply the automated methods. 
+Furthermore, they suggested a function allowing people to see a pattern of abnormality for a user-defined topic.
+
+\section{Summary}
+\label{sec:concl}
+We presented an interactive abnormal event detection and examination system for the analysis of multiple social media data sources.
+The system uses an abnormality estimation scheme based on probabilistic topic modeling and seasonal-trend decomposition to find and examine relevant message subsets. This scheme is tightly integrated into an highly interactive visual analytics system, which supplements tools based on automated message evaluation with sophisticated means for parameter steering, filtering and aggregated result set exploration.
+Three use cases demonstrated the visualization and user interaction within the system and its capabilities to detect and examine several different event types from social media data.
+The ability to crosscheck findings based on three distinct social media sources revealed the kinds of correlations that can be expected from various event types.
+%Finally, we showed that our interactive system allows an effective analysis of a massive social media data set.
+
+%For future work, we will further investigate context-based analysis and improve the current detection algorithm to allow for a faster analysis.
+%Due to the fast-paced and low quality nature of microblogging, we will also investigate the effects of additional preprocessing options like automated spell-checking or synonym recognition under the constraint of preventing ambiguities.
+%Furthermore, we want to supplement the system with real-time monitoring features, demanding additional means for adaptive attention guiding as well as interaction techniques for use in high pressure environments. For the final system we are currently preparing a thorough evaluation to test it in cooperation with crisis management personnel and other domain experts.

@@ -1,0 +1,66 @@
+\chapter{Trajectory-based Visual Analytics for Anomalous Human Movement Analysis}
+
+Analysis of human mobility patterns is important for urban planning, traffic forecasting, and understanding the pandemic spread of diseases.
+%Even though human movements are free, their patterns can exihibit a high degree of spatiotemporal regularity and can exhibit structure~\cite{Gonzalez:2008:UIH}.
+For crisis and disaster events, movement analysis, such as where people move to/from and how people respond to disasters, is also critical for evacuation management.
+Unfortunately, finding meaningful data is challenging and collecting relevant data can be costly.
+%show common structured patterns.
+However, the rapid development and increasing availability of mobile communication and location acquisition devices allow people to share location data using existing social networks.
+These LBSNs have been gaining attention as promising data sources for analyzing human movements.
+%and have beneficial characteristics: easy access, the large volumes, and a variety of information.
+Particularly, trajectories\textemdash sequences of geo-referenced data nodes of each user\textemdash extracted from such LBSNs provide opportunities and solutions to challenges in human movement analysis~\cite{Andrienko:2009:Analysis, Fuchs:2013:Extracting, Gabrielli:2014:Tweets}.
+Also, LBSNs play an important role in the way people act and react to the world, not only in daily life, but especially during abnormal situations.
+In emergency situations, people interact with others through LBSNs to confirm information and obtain situational awareness of the potential risks~\cite{national:2013:Public}.
+%In addition, LBSN services provide multiple types of semantic context information.
+In addition, their semantic context enhances understanding of local events and human movements~\cite{Hochman:2012:Visualizing, Zin:2013:Knowledge}.
+%Vrotsou:2012:Interactive
+
+Previous studies have mainly focused on finding regular movement patterns using spatial data.
+They have demonstrated that human movements are normally influenced by geographic constraints, life patterns, and spatial and temporal events, such as local festivals and holiday seasons~\cite{Andrienko:2011:Movement, Fujisaka:2010:DOU}.
+%However, the research may have limitations.
+However, during disaster events, since human movement patterns (e.g., volume and direction of movements) are unusual compared to normal situations, a new approach is required to analyze the movements.
+Also, analyzing location data alone has shown limitations in achieving situational awareness of local events.
+For example, they cannot answer why people move and what situations occur.
+
+To address these challenges, we propose a trajectory-based visual analytics system for anomalous human movement analysis during disasters using multi-type online media.
+We extract trajectory using Tweets with geo-location, and geo-tagged photographic data from Instagram (a photo sharing social network service).
+Our system generates trajectories using geo-location information of chronologically ordered Tweets for each person.
+The extracted raw trajectories, however, do not have enough fine-grained spatial positions.
+We supplement the sparse positions in the trajectories using route information between each position.
+%The complemented trajectories are visualized for further examinations.
+We group the individual trajectories into classes of similar sub-trajectories using a trajectory clustering model based on the partition-and-group framework~\cite{Lee:2007:Trajectory}.
+This enables users to discover sub-common patterns, rather than finding common patterns as a whole.
+%even though there is no common pattern if the basic unit of clustering is the whole trajectory.
+%Our system allows users to track and examine change of movement patterns over time.%: past and current.
+
+We also propose a classification model based on historical data for abnormal movement detection using human expert interaction.
+We allow users to utilize their domain knowledge of the spatiotemporal characteristics of their regions of interest to interactively identify and compare abnormal trajectory patterns with normal trajectory patterns.
+%We expect the users of our system have knowledge about geographical and temporal characteristics of the location where an abnormal event of interest occurred.
+%The users select a target time window or a real time mode for the abnormal situation and also choose another time window representing a normal situation.
+%We extract two sets of trajectories for the two different time windows.
+%Our analytics model then identifies abnormal movement patterns based on the movements of the normal situation.
+In addition, we integrate multiple visual representations using relevant context extracted from different online media sources, such as Tweet text, shared photos, public webcam videos, and news media to allow users to discover and analyze anomalous human movement patterns; thereby, improving situational awareness in disaster management situations. 
+%This enhances the human movement analysis by improving situational awareness.
+%In addition, based on the discovered movements, we extract multiple types of semantic context information (i.e., photo, video, news media) from different data sources and then visually incorporate the information into the system
+%Through case studies, we demonstrate how our analytics model discovers anomalous human movement patterns during crisis events and how our visual analytics system improves the movement analysis for disaster management.
+
+The major contributions of this work are as follows:
+\begin{itemize}
+\item We develop a visual analytics system to discover and explore common structural movement patterns from unstructured massive movement data.
+%\item We provide a visualization scheme that allow the analysts to simultaneously analyze trajectory patterns over different time frames.
+%\item We design a trajectory-based anomaly detection model to detect and track abnormal human movement patterns.
+\item We design a trajectory-based classification model for abnormal movement detection using human expert interaction.
+\item We develop visual means to improve human movement analysis using semantic context available from multiple online media sources.
+%\item We develop visual means to improve human movement analysis by combining an exploratory spatiotemporal analysis of trajectories with semantic context information available from multiple types of social media.
+\item We demonstrate the effectiveness of our system in disaster management and evacuation planning through case studies.
+\end{itemize}
+
+
+\input{tra_system}
+\input{tra_trajectory_extraction}
+\input{tra_analysis_models}
+%\input{anomaly_model}
+\input{tra_visualization_analysis}
+\input{tra_context_analysis}
+\input{tra_casestudy}
+\input{tra_conclusion}

@@ -1,0 +1,44 @@
+\section{Spatiotemporal Social Media Analytics for Event Examination}
+\label{sec:social_analytics}
+Since several social media sources recently provide space-time indexed data, traditional techniques for spatiotemporal zooming, filtering and selection can now be applied to explore and examine the data.
+However, as message volumes exceed the boundaries of human evaluation capabilities, it is almost impossible to perform a straightforward qualitative analysis of the data.
+In order to cope with the data volumes, traditional interaction and visualization techniques have to be enhanced with automated tools for language processing and signal analysis, helping an analyst to find, isolate and examine unusual outliers and important message subsets.
+
+To address this issue, we present an interactive analysis process that integrates advanced techniques for automated topic modeling and time series decomposition with a sophisticated analysis environment enabling large scale social media exploration. 
+In part~\ref{subsec:topic_extraction} of this Section we first explain how the Latent Dirichlet Allocation, a well established topic modeling technique in the information retrieval domain, can be used to extract the inherent topic structure from a set of social media messages. The output of this technique is a list of topics each given by a topic proportion and a set of keywords prominent within the topics messages. In a subsequent step, our system then re-ranks the retrieved topic list by identifying unusual and unexpected topics. This is done by employing a seasonal-trend decomposition algorithm to the historic time series data for each topic, retrieving its seasonal, trending and remainder components. 
+Using a z-score evaluation, we locate peaks and outliers in the remainder component in order to find an indicator of unusual events.
+While the LDA topic extraction is done primarily for Twitter data, 
+the abnormality estimation is also applied to different social media data sources, such as Flickr and YouTube, for each topic. 
+This is achieved by searching matching entries for each term of a topic and applying the same STL analysis on the resulting time series.
+The results are available to the analyst for cross validation.
+The details of this step are described in Subsection~\ref{subsec:filtering} and the complete detection model is formally described in Subsection~\ref{subsec:analysis_multi_social}. In Section~\ref{sec:analysisprocess}, 
+we describe how powerful tools based on these techniques are used within our analysis environment, Scatterblogs, 
+in order to iteratively find, isolate and examine relevant message sets.
+
+%~\ref{fig:process}.
+
+%Our main goal is identifying such unusual and even critical events within the social media data set.
+%We carried out a series of experiments to extract topics from Tweets in 7 days prior to the event date.
+%In result, the common topics had large proportion values for almost every day, but there was not the abnormal 
+%event topic in the experimental results.
+%As we were motivated by this experimental result, 
+%
+%first, we sampled Tweets that include 
+%at least one of the words of individual topics and generate time series of daily count Tweets per topic.
+
+
+%\textbf{Visualization:}
+%Our system provides an interactive scalable geo-locational visualization using the ranked abnormal topics
+%by plotting the locations of the social media data referring the topic and displaying term clouds of the topic words.
+%Moreover, the system enables an iterative analysis of the data through user interaction.
+
+%assume abnormal events rarely occur
+%We focus on such unusual topics and events
+
+%% \subsection{Data collection}
+%% \label{subsec:data_collection}
+
+%% \section{Abnormal event and topic detection}
+%% \label{sec:abnormal_dect}
+
+%%

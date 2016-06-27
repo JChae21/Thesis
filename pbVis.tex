@@ -1,0 +1,82 @@
+\chapter{Visual Analytics of Microblog Data for Public Behavior Analysis in Disaster Events}
+
+%\textit{Hurricane Sandy} approached Northeastern United States during late October 2012 and New York City announced a mandatory evacuation of some low-lying areas in the morning on October 28th. these three figures show the southern part of Manhattan. (Left) shows spatial user-based Tweet distribution from noon to 4:00 PM, right after the evacuation order. We overlay the locations of big supermarkets (blue pin) on the same heatmap. we see relatively many number of people immediately go to supermarkets. (Center and Right) shows the distributions during one and two weeks before the same time period. The hotspots are locationally much different from ones of (Left). The green pins on the maps, (Center and Right) indicate the locations of big parks in the southern region of Manhattan. The many hotspots overlap with the park areas; this would be a normal situation on Sunday.
+
+
+%For emergency and disaster management, analysis of public behavior, such as how people prepare and respond to disasters, is important for evacuation planning.
+Analysis of public behavior plays an important role in crisis management, disaster response, and evacuation planning. 
+As social media has played a pervasive role in the way people think, act, and react to the world (more than 40 million Americans use social media Web sites multiple times a day~\cite{TW:2010:SHF}), social media is changing the way people communicate not only in their daily lives, but also during abnormal events, such as natural disasters.
+In emergency situations, people even seek social confirmation before acting in response to a situation, where they interact with others to confirm information and develop a better informed view of the risk~\cite{national:2013:Public}.
+A study commissioned by the American Red Cross, found that roughly half of the respondents would mention emergencies and events on their social media channels, and more than two-thirds agree that response agencies should regularly monitor postings on their websites~\cite{ARC:2010:SMD}.
+Moreover, a growing number of people are using Location-based Social Network services, such as microblogs, where they create time-stamped, geo-located data and share this information about their immediate surroundings using smart phones with GPS. 
+Such spatiotemporal data has great potential for enhancing situational awareness during crisis situations and providing insight into the evolving event, the public response, and potential courses of action. 
+
+%From government agencies and other organizations, to citizens and social platforms themselves, people across the spectrum of social media are leveraging its use to respond to emergencies. 
+%According to a 2011 report of the Congressional Research Service, there are two broad categories in the way that we can conceptualize this use of social media: 1) to "somewhat passively" disseminate information and receive user feedback; and 2) to use social media more systematically as an emergency management tool.
+
+%Unfortunately, finding meaningful information for the analysis is challenging and collecting relevant data would create even high cost.
+
+For public behavior analysis in disasters, however, finding meaningful information from social media is challenging. It is almost impossible to perform a straightforward qualitative analysis of the data, since the volume of the data exceeds the boundaries of human evaluation capabilities and normal computing performance.
+%since data volume has increased beyond the capabilities of manual evaluations.
+Even though we could extract certain information from the data, it is not always easy to determine whether the analysis result of the extracted information is meaningful and helpful.
+Thus, there is a need for advanced tools to handle such big data and aid in examining the results in order to understand situations and glean investigative insights.
+Given the incomplete, complex, context-dependent information, a human in this analysis and decision-making loop is crucial.
+Therefore, a visual analytics approach offers great potential through interactive, scalable, and verifiable techniques, helping analysts to extract, isolate, and examine the results interactively.
+In this thesis, we present an interactive visual analytics approach for spatiotemporal microblog data analysis to improve emergency management, disaster preparedness, and evacuation planning~\cite{Chae:2014:Public}.
+We demonstrate the ability to identify spatiotemporal differences in patterns between emergency and normal situations, and analyze spatial relationships among spatial distributions of microblog users, locations of multiple types of infrastructure, and severe weather conditions.
+Furthermore, we show how both spatiotemporal microblog and disaster event data can help the analysts to understand and examine emergent situations, and evaluate courses of action.
+%location-based public behavior and locations of multiple types of infrastructures.
+
+
+This study is performed using Tweets, as Twitter has been the most popular microblog service in the United States.
+We extend our previous work~\cite{Chae:2013:VAM} with additional features of our system and examine their capabilities with several expanded examples in Section~\ref{sec:spatial_decision_support}.
+%explain them through more number of case studies (wider range of east coast for the hurricane and a tornado case in the city of Moore) in Section~\ref{sec:spatial_decision_support}.
+We also add a discussion section for comparisons and analysis of the case studies.
+%that were published before, during, and after 
+%hurricane \textquotedblleft Sandy \textquotedblright 
+%\textit{Hurricane Sandy}.
+%that hit the New York City area on October 29th, 2012.
+%For this study, 1,740,114 Tweets published by 92,683 people are used.
+
+Our system evaluates visual analytics of spatiotemporal distribution of Tweets to identify public behavior patterns during natural disasters.
+%We propose an approach that visualizes spatiotemporal distribution of Tweets to identify public behavior patterns during natural disasters.
+The main features of our approach are as follows:
+\begin{itemize}
+	\item \textbf{Spatial analysis and decision support:} The system provides effective analysis for exploring and examining the spatial distribution of Twitter users and supporting spatial decision-making using a large volume of geo-located Tweets and multiple types of supplementary information during specific time periods (i.e., disaster events).
+\item \textbf{Temporal pattern analysis:} Our visualization system enables the analysts to analyze the temporal distribution of the number of Twitter users posting Tweets in a given location and time.
+\item \textbf{Spatiotemporal visualization:} We provide a visualization that allows the analysts to simultaneously analyze both aspects: space and time in a single view.
+\end{itemize}
+
+%We first review previous work in Section 2 and describe
+%our interactive analysis system in Section 3. 
+%We present analysis results for two natural disaster events in Section 4
+%and discussion in Section 5. Finally conclusion and future directions are presented
+%in Section 6.
+
+\input{pb_spatial_analysis}
+\input{pb_temporal_analysis}
+\input{pb_spatiotemporal_visualization}
+\input{pb_conclusion}
+
+
+%This system provides a heat map of people who posted geo-located Tweets around the Manhattan area during specific time periods and allows us to analyze their spatial distribution.
+%Our bar chart visualization enables users to analyze the temporal distribution of the number of people tweeting in a given location and time.
+%Finally, we provide a visualization that allows users to simultaneously analyze both aspects: space and time using a single view.
+
+%The remainder of this document is structured as follows: 
+%Section~\ref{sec:relatedwork} is a review of related work.
+%We demonstrate how to improve investigations and analysis for public behavior response to the disaster by spatiotemporal analysis of social media in Section~\ref{sec:body}.
+%Finally, we present a conclusion and future work in Section~\ref{sec:conclusions}.
+
+%\subsection{Data and Event}
+%\label{sec:data}
+%
+%\begin{figure}[tb]
+%\centering
+%\includegraphics[width=0.9\columnwidth]{Sandy_Track}
+%\caption{Track of Sandy}
+%\label{fig:sandy_track}
+%%\vspace{-0.8cm}
+%\end{figure}
+%
+%Explain about data and events

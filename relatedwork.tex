@@ -1,0 +1,212 @@
+\chapter{Background and Related Work}
+%most of this has already been said in the introduction!
+%Recent advances in mobile computing, such as the iPhone and Android devices, 
+%in combination with shifting social behavior through social media services, 
+%such as Twitter and Facebook, have created unprecedented data collections of space and time-oriented messages.
+%Moreover, due to the tremendously increased number of users,
+In recent years social media data has become a popular topic in a range of application domains. 
+%In recent research, social media services have become a popular and influential data source for many domains.
+Researchers in the fields of data mining and visual analytics have found through studies among users and domain experts, that the analysis of such data can be essential for spatiotemporal situational awareness~\cite{MacEachren:2011:SGA, Sakaki:2010:EST}.
+Also, several researchers have proposed and presented systems for social media analysis and important studies covering the use of social media during crisis events have been conducted.
+Thus, as the size of social media data increases, scalable computational tools for the effective analysis and 
+discovery of critical information within the data are a vital research topic.
+This section presents previous work that has focused on visual analytics of LBSNs, crisis related social media exploration and visualization, and human movement analysis using LBSNs.
+
+\section{Visual Analytics of Location-based Social Networks}
+%\section{Spatiotemporal Social Media Data Analysis}
+%\label{subsec:sm_analysis}
+% all the things below have been said in the paragraph above
+% Earlier web-based social communication services could not support spatiotemporal information. % has already been said 
+% Recently , however, have enabled it and improved the value of information. 
+As social media platforms move towards LBSNs.
+researchers have proposed various approaches to analyze spatiotemporal document collections, in general, and spatiotemporal social media data, in particular.
+%Chae et al.~\cite{CHAE:2012:SSM} proposed the combination of Latent Dirichlet Allocation and Seasonal-Trend Decomposition based on locally-weighted regression for an ad-hoc analysis of a user selected set of messages regarding the topical distribution of messages and the abnormal presence of topics.
+VisGets~\cite{Doerk2008} provides linked visual filters for the space, time and tag dimensions to allow the exploration of datasets in a faceted way.
+The user is guided by weighted brushing and linking, which denotes the co-occurrences of attributes.
+Further works demonstrate the value of visualizing and analyzing the spatial context information of microblogs for social network users~\cite{Field:2010:CEI} or third parties like crime investigators~\cite{Roth:2010:TGA} and urban planners~\cite{Wakamiya:2011:CUC}.
+%Wakamiya et al.~\cite{Wakamiya:2011:CUC} modeled crowd behavior features and patterns using Twitter messages.
+%Based on their model, they analyzed Twitter messages and provided a method to extract urban characteristics.
+% Field and O'Brien 
+% Roth and White~\cite{Roth:2010:TGA} propose a framework to retrieve Tweets and visualize spatiotemporal attributes of Tweets.
+With Senseplace2, MacEachren et al.~\cite{MacEachren:2011:SGA} demonstrate a visualization system that denotes the message density of actual or textually inferred Twitter message locations.
+The messages are derived from a textual query and can then be filtered and sorted by space and time.
+Their work also has shown that social media can be a potential source for crisis management.
+With ScatterBlogs~\cite{Bosch:2011:SGD}, our own group developed a scalable system enabling analysts to work on quantitative findings within a large set of geolocated microblog messages.
+In contrast to Senseplace2, where the analysts still have to find and manage the appropriate keywords and filters to gather relevant messages in the high volume of insignificant messages, we propose a semi-automatic approach that finds possibly relevant keywords and ranks them according to their \textquoteleft abnormality\textquoteright.
+
+Special LBSN for certain domains, like Bikely~\cite{Bikely:2012:Web} and EveryTrail~\cite{EveryTrail:2012:Web} have an even stronger focus on the sharing and tracing of user locations.
+Ying et al.~\cite{Ying:2011:UAA} present various location based metrics using spatial information of these LBSNs to observe popular people who receive more attention and relationships within the network.
+Similarly, there are many related works for non-spatial temporal document collections, for example IN-SPIRE~\cite{inspire}, which is a general purpose document analysis system that depicts document clusters on a visual landscape of topics.
+
+\section{Event Detection and Topic Analysis of Social Media}
+%\section{Social Media Event Detection and Topic Extraction}
+%\subsection{Social Media Event Detection and Exploration}
+%\label{subsec:event_dect}
+One of the major challenges in analyzing social media data is the discovery of critical information obscured by large volumes of random and unrelated daily chatter.
+Due to the nature of microblogging, message streams like Twitter are very noisy compared to other digital document collections.
+Recently, many researchers have tried to solve this challenge by means of automated and semi-automated detection and indication of relevant data.
+
+Sakaki et al.~\cite{Sakaki:2010:EST} propose a natural disaster alert system using Twitter users as virtual sensors.
+In their work, they were able to calculate the epicenter of an earthquake by analyzing the delays of the first messages reporting the shock.
+Weng and Lee~\cite{Weng:2011:EDI} address the challenge by constructing a signal for each word occurring in Twitter messages using wavelet analysis, thereby making it easy to detect bursts of word usage.
+Frequently recurring bursts can then be filtered by evaluating their auto-correlation.
+The remaining signals are cross correlated pairwise and clustered using a modularity-based graph partitioning of the resulting matrix.
+Due to the quadratic complexity of pairwise correlation, they rely on heavy preprocessing and filtering to reduce their test set to approx 8k words.
+As a result, they detected mainly, large sporting events, such as soccer world cup games, and elections.
+Our approach, in contrast, provides a set of topics through a probabilistic topic extraction algorithm which can be iteratively applied to subsets and subtopics within user selected message sets.
+
+Lee and Sumiya~\cite{Lee:2010:MGR} as well as Pozdnoukhov and Kaiser~\cite{Pozdnoukhov:2011:SDT} present methods to detect unusual geo-social events by measuring the spatial and temporal regularity of Twitter streams.
+Lee and Sumiya propose a concept to detect unusual behavior by normalizing the Twitter usage in regions of interests which are defined by a clustering-based space partitioning.
+However, their results are mainly a measurements of unusual crowd behavior and do not provide further means for analyzing the situation.
+Pozdnoukhov and Kaiser observe abnormal patterns of topics using spatial information embedded in Twitter messages.
+Similar to our approach, they apply a probabilistic topic model (Online Latent Dirichlet Allocation) as a means of analyzing the document collection.
+A Gaussian RBF kernel density estimation examines the geo-spatial footprint of the resulting topics for regularities. 
+The usual message count of identified areas is then learned by a Markov-modulated non-homogeneous Poisson process.
+The spatial patterns are shown as a static heat map.
+The resulting system does not provide interactive analytics capabilities.
+%Their geocoding routine would provide a city level of geo-coordinates since it uses user profile 
+%information of each Tweets.
+%TODO is that true
+%Jackoway et al.~\cite{Jackoway:2011:ILN} use an external media, such as online news corpus,
+%in order to discover interesting and reliable events together with Twitter messages.
+
+Recently, researchers have applied LDA topic modeling to social media data to summarize and categorize Tweets~\cite{Zhao:2011:CTA} and find influential users~\cite{Weng:2010:TFT}. 
+Zhao et al.~\cite{Zhao:2011:CTA} demonstrate characteristics of Twitter by comparing the content of Tweets with a traditional news medium, such as the New York Times.
+They discuss and adapt a Twitter-LDA model and evaluate this model against the standard topic model and the so-called author-topic model~\cite{Steyvers:2004:PAM}, where a document is generated by aggregating multiple Tweets from a single user, in terms of meaningfulness and coherence of topics and Twitter messages.
+In this work, we do not use the author-topic model, since a users Tweet timeline is usually a heterogeneous mixture of unrelated comments and messages and not a homogenous framework of interrelated topics like a traditional document.
+Furthermore, the evaluation of Zhao et al.~\cite{Zhao:2011:CTA} shows that the standard model has quite reasonable topic modeling results on Tweets, although the Twitter-LDA model outperforms the standard model. 
+Works from Ramage et al.~\cite{ramage:2010:CMW} also show promising results in LDA based Twitter topic modeling by evaluating another type of LDA model (Labeled LDA)~\cite{Ramage:2009:LLS}.
+ParallelTopics~\cite{Wenwen:2011:PAP} also extracts meaningful topics using LDA from a collection of documents.
+The visual analytics system allows users to interactively analyze temporal patterns of the multi-topic documents.
+The system, however, does not not deal with spatial information, but takes an abnormality estimation into account.
+
+In our previous work~\cite{Thom:2012:SAD}, we proposed a spatiotemporal anomaly overview based on a streaming enabled clustering approach that is applied for each term in the dataset individually.
+The resulting clusters can be used to generate a spatially and temporally explorable term map of large amounts of microblog messages as an entry point for closer examination.
+Even though the scalable event detection and our current approach share the same workbench, they can be used independently as well as complementary.
+The combination of LDA and STL allows for an ad-hoc analysis of a user selected set of messages regarding the topical distribution of messages and the abnormal presence of topics.
+Due to this characteristic, it provides an iterative analysis loop for qualitative analysis and drill down operations.
+
+
+\section{Disaster Management based on Social Media Analysis}
+%\section{Crisis Related Social Media Exploration and Visualization}
+
+Most recent analysis environments for crisis-related social media exploration and visualization are from MacEachren et al.~\cite{MacEachren:2011:SGA}, Marcus et al.~\cite{marcus2011twitinfo}, and Thom et al.~\cite{Thom:2012:SAD}.
+Their systems combine traditional spatial and geographic visualizations with means for automated location discovery, trend and outlier search, anomaly and event discovery, large scale text aggregation and highly interactive geovisual exploration.
+Approaches putting less focus on visualizations and more on fully automated data mining mechanisms have been proposed by Sakaki et al.~\cite{Sakaki:2010:EST} that use Kalman and Particle Filters to detect the location of earthquakes and typhoons based on Twitter.
+Various techniques for spatiotemporal data analysis and anomaly detection using visualization or machine learning techniques have been proposed by Andrienko et al.~\cite{Andrienko:2001:ECC}, Lee and Sumiya~\cite{Lee:2010:MGR}, and Pozdnoukhov and Kaiser~\cite{Pozdnoukhov:2011:SDT}.
+Twitcident from Abel et al.~\cite{abel2012semantics+} provides a web-based framework to search and filter crisis-related Tweets. Using the Netherlands emergency broadcast system, Twitcident automatically reacts on reported incidents and collects related information from Twitter based on semantic enrichment.
+In all these system the focus is primarily on individual messages and aggregated message volumes and how insight can be generated by understanding their content. 
+In contrast, our system investigates a more user focused approach that tries to identify the whereabouts and movements of people in order to understand mass behavior.
+
+Researchers have also examined the usage of Twitter during incidents and disasters.  Terpstra et al.~\cite{terpstra2012towards} investigate more than 90k Twitter messages that were sent during and after a storm hit the Belgium \textit{Pukkelpop} musicfestival in 2011. 
+They categorize Tweets into warnings about the severe weather conditions, rumors and self organization of relief measures. 
+They show that valuable information for crisis response and decision support can be gathered from the messages. 
+Vieweg et al.~\cite{Vieweg:2010:MTN} investigate the differences in reaction to different crisis events.
+For their study they investigate eyewitness reports in Twitter from people that were affected by Oklahoma Grassfires in April 2009 and Red River Floods in March and April 2009. Their research also demonstrates the high value that the extraction of meaningful comments from crisis-related communication can have to generate insights.
+Furthermore, Heverin et al.~\cite{heverin2010microblogging} demonstrate that Twitter can also be a useful source of information for smaller events as they investigate the reaction to a shooting of four police officers and the subsequent search for the suspect that took place in the Seattle-Tacoma area. Based on the collection and categorization of 6000 messages they are able to show that citizens use the service to communicate and seek information related to the incident.
+
+In this thesis, we also present case studies on crisis-related information gathered from Twitter data.
+However, in contrast to the discussed studies that harvest information directly out of the content of the messages, our method is primarily based on observing movement patterns and identifying local hotspots in order to learn about the effects of the crisis and the performance of evacuation measures.
+
+
+\section{Human Movement Analysis using Location-based Social Networks}
+%\section{Human Movement Analysis using Location-Based Social Networks}
+%\label{sec:relate_work_human_move_LBSN}
+
+As many social networks move towards LBSNs, researchers have proposed various approaches to analyze spatiotemporal social media data.
+Adrienko et al.~\cite{Andrienko:2013:TPG} describe a visual analysis approach for exploring Tweet text and spatiotemporal patterns.
+Krueger et al.~\cite{Krueger:2014:VAM} extract frequent visited places from vehicle movement data and further use semantics distilled from the social network to decode daily activities of people.
+Approaches putting less focus on visualizations and more on data mining mechanisms have been
+proposed by some studies~\cite{Wei:2012:CPR,Braga:2011:TCA,Cho:2011:FAM} to discover human movement patterns based on LBSNs.
+For the research on collective movement, clustering is a popular approach in looking for common patterns.
+Andrienko et al.~\cite{Andrienko:2013:Visual} propose a wide range of clustering-based analytics models and combine those with visualization techniques.
+Their clustering models group similar trajectories as a whole and extract common trips.
+In this work, we focus on finding common sub-trajectories.
+%utilize a clustering model~\cite{Lee:2007:Trajectory} in order to find common sub-trajectories.
+Our clustering of sub-trajectories (as opposed to whole trajectories) enables the extraction of similar portions of trajectories, even when no overall clusters may exist.
+%\textemdash the basic unit of clustering is the whole trajectory.
+
+Existing anomaly detection models~\cite{Liao:2010:Anomaly,Knorr:2000:DOA,Breunig:2000:LOF} for trajectory data have mainly focused on identifying outliers from a target dataset.
+The models are usually based on non-supervised learning\textemdash they generally do not have factors for the outliers, and assume that the outliers make for a small sub-set from the entire dataset.
+These models look for major patterns and determine whether each trajectory belongs to the majority according to specific criteria.
+However, during abnormal situations, even the major behaviors can be unusual compared to normal situations.
+
+To address this challenge, our work focuses on the anomalous human behavior analysis through the combination of user expert knowledge and automatic anomaly detection models.
+The research~\cite{Andrienko:2007:Visual,Adrienko:2011:SGA,Andrienko:2013:STU} dealing with GPS data for collective movement analysis takes advantage in high spatial density compared to density of LBSNs.
+However, it is difficult to collect data for areas of interest and the data usually has no other context.
+In order to resolve these issues, we utilize additional context (i.e., Tweet text) from LBSNs and visually incorporate the information to enhance the human movement analysis by improving situational awareness.
+
+
+%Various user behavior patterns can be obtained from data mining of LBSNs~\cite{Lee:2010:MGR, Fujisaka:2010:DOU, Zheng:2010:Geolife}. 
+%Some peer works proposed a visual analysis system to allow users to explore the user behaviors.
+
+%Further works demonstrate the value of visualizing and analyzing the spatial context information of microblogs for social network users~\cite{Field:2010:CEI} and urban planners~\cite{Wakamiya:2011:CUC}.
+%Wakamiya et al.~\cite{Wakamiya:2011:CUC} modeled crowd behavior features and patterns using Twitter messages.
+%Based on their model, they analyzed Twitter messages and provided a method to extract urban characteristics.
+% Field and O'Brien 
+% Roth and White~\cite{Roth:2010:TGA} propose a framework to retrieve Tweets and visualize spatiotemporal attributes of Tweets.
+%The messages are derived from a textual query and can then be filtered and sorted by space and time.
+%Their work also has shown that social media can be a potential source for crisis management.
+%In contrast to Senseplace2, where the analysts still have to find and manage the appropriate keywords and 
+%filters to gather relevant messages in the high volume of insignificant messages,
+%we propose a semi-automatic approach that finds possibly relevant keywords and ranks them according to their \textquoteleft abnormality\textquoteright.
+%Special LBSN for certain domains, like Bikely\footnote{\url{http://www.bikely.com/}} and EveryTrail\footnote{\url{http://www.everytrail.com/}} have an even stronger focus on the sharing and tracing of user locations.
+
+%\section{Disaster Management Based on Social Media Analysis}
+%\label{sec:related_work_disaster}
+%
+%Analysis of social media data can provide valuable information to assistant crisis response and decision making in disaster management.
+ %%Most recent peer works for crisis-related social media exploration and visualization are from MacEachren et al.~\cite{MacEachren:2011:SGA}, Marcus et al.~\cite{marcus2011twitinfo}, and Thom et al.~\cite{Thom:2012:SAD}. They combine traditional spatial and geographic visualizations with means for automated location discovery, trend and outlier search, anomaly and event discovery, large scale text aggregation and highly interactive geovisual exploration.
+%%Approaches putting less focus on visualizations and more on fully automated data mining mechanisms have been proposed by 
+%Lee and Sumiya~\cite{Lee:2010:MGR} as well as Pozdnoukhov and Kaiser~\cite{Pozdnoukhov:2011:SDT} present methods to detect unusual geo-social events by measuring the spatial and temporal regularity of Twitter streams.
+%Lee and Sumiya propose a concept to detect unusual behavior by normalizing the Twitter usage in regions of interests which are defined by a clustering-based space partitioning.
+%However, their results are mainly a measurement of unusual crowd behavior and do not provide further means for analyzing the situation.
+%Chae et al.~\cite{chae2014public} propose multiple visualizations of spatiotemporal analysis for disaster management and evacuation planning.
+%Sakaki et al.~\cite{Sakaki:2010:EST} propose an algorithm to detect the location of earthquakes and typhoons based on Twitter.
+%Researchers have also examined the usage of Twitter during incidents and disasters. 
+%Terpstra et al.~\cite{terpstra2012towards} investigate more than 90k Twitter messages that were sent during and after a storm hit the Belgium \textit{Pukkelpop} music festival in 2011. Vieweg et al.~\cite{Vieweg:2010:MTN} investigate the differences in reaction to different crisis events by investigating tweets of eyewitness reports. Heverin et al.~\cite{heverin2010microblogging} investigate the human reaction to a shooting accident and the subsequent by tweets.
+%In all these methods the focus is primarily on individual messages, aggregated message volumes, and how insight can be generated by understanding their content. 
+%In contrast, our system investigates a more user focused approach that tries to identify the whereabouts and movements of people in order to understand mass behavior.
+
+%Several researchers have proposed systems for social media analysis and important studies covering the use of social media during crisis events have been conducted.
+%
+%Improved response to disasters and outbreaks by tracking population movements with mobile phone network data: a post-earthquake geospatial study in Haiti~\cite{Bengtsson:2011:Improved}
+%%In recent years social media data has become a popular topic in a range of application domains. 
+%Most recent analysis environments for crisis-related social media exploration and visualization are from MacEachren et al.~\cite{MacEachren:2011:SGA}, Marcus et al.~\cite{marcus2011twitinfo}, and Thom et al.~\cite{Thom:2012:SAD}.
+%Their systems combine traditional spatial and geographic visualizations with means for automated location discovery, trend and outlier search, anomaly and event discovery, large scale text aggregation and highly interactive geovisual exploration.
+%Approaches putting less focus on visualizations and more on fully automated data mining mechanisms have been proposed by Sakaki et al.~\cite{Sakaki:2010:EST} that use Kalman and Particle Filters to detect the location of earthquakes and typhoons based on Twitter.
+%%Various techniques for spatiotemporal data analysis and anomaly detection using visualization or machine learning techniques have been proposed by Andrienko et al.~\cite{Andrienko:2001:ECC}, Lee and Sumiya~\cite{Lee:2010:MGR}, and Pozdnoukhov and Kaiser~\cite{Pozdnoukhov:2011:SDT}.
+%In all these systems the focus is primarily on individual messages and aggregated message volumes and how insight can be generated by understanding their content.
+%In contrast, our system investigates a more user focused approach that tries to identify the whereabouts and movements of people in order to understand mass behavior.
+%
+%Researchers have also examined the usage of Twitter during incidents and disasters. Terpstra et al.~\cite{terpstra2012towards} investigate more than 90k Twitter messages that were sent during and after a storm hit the Belgium \textit{Pukkelpop} musicfestival in 2011.
+%They categorize tweets into warnings about the severe weather conditions, rumors and self organization of relief measures. 
+%They show that valuable information for crisis response and decision support can be gathered from the messages.
+%Vieweg et al.~\cite{Vieweg:2010:MTN} investigate the differences in reaction to different crisis events.
+%For their study they investigate eyewitness reports in Twitter from people that were affected by Oklahoma Grassfires in April 2009 and Red River Floods in March and April 2009. Their research also demonstrates the high value that the extraction of meaningful comments from crisis-related communication can have to generate insights.
+%Furthermore, Heverin et al.~\cite{heverin2010microblogging} demonstrate that Twitter can also be a useful source of information for smaller events as they investigate the reaction to a shooting of four police officers and the subsequent search for the suspect that took place in the Seattle-Tacoma area. Based on the collection and categorization of 6000 messages they are able to show that citizens use the service to communicate and seek information related to the incident.
+
+
+%\section{Visual Analysis of Movement Data}
+%\label{sec:related_work_vis_movement}
+
+%Visual analysis of trajectory-based movement data is a well researched area. 
+%Many peer works~\cite{Andrienko:2012:Visual, Andrienko:2007:Visual} indicate that location-based visual analysis can intuitively assist users to know about environments and find out key events. 
+%Dense movement data, like GPS data, can be analyzed in the microscope. 
+%Hurter et al.~\cite{Hurter:2009:FromDaDy} propose an iterative query method to explore a large amount of Aircraft trajectories. 
+%TripVista~\cite{Guo2011TripVista} is a system to explore the traffic situation at a road intersection. 
+%Zeng et al.~\cite{zeng2014} explore the movement patterns of public transportation system. 
+%Andrienko et al.~\cite{Andrienko:2013:GroupMovement} propose a methodology to visualize the leadership in the group movement. 
+%Wang et al.~\cite{Wang:2013:Traffic_Jam} provide a system to explore traffic jams. 
+%For the sparse trajectory data, many peer works~\cite{Wang:2014:SparseTraffic, Adrienko:2011:TrajAggregation} aggregate the traffic data based on the spatial division to analyze the group movement on the macro level.
+%Our work focuses on the macroscopic level since tweets with geo-location are sparse.
+%In addition, considering the real movement of tweet users are constrained by the spatial environment, we enrich the sparse trajectories with road information in the real world.
+
+
+
+
+
+%Ferrari:201:Extracting
+%Zheng:2010:Geolife
+
+

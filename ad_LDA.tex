@@ -1,0 +1,163 @@
+\subsection{Topic Extraction}
+\label{subsec:topic_extraction}
+
+\begin{table}[b]%\footnotesize
+\begin{center}
+\begin{tabular}{|l|l|l|}
+	\hline
+	 Rank & Proportion & Topics \\
+	\hline\hline
+	1 & 0.10004  & day back school today \\ %work \\
+	2 & 0.09717	 & lls bout dat wit \\ %yea \\
+	3  & 0.09443 & people make hate wanna \\ %life  \\
+	4 & 0.08226 & \textbf{earthquake thought house shaking} \\ %damn}  \\
+	5 & 0.05869 & \textbf{earthquake felt quake washington} \\ %virginia} \\	
+	\hline
+\end{tabular}
+\caption{An example of extracted topics and their proportions.
+We extracted topics from Tweets written on August 23, 2011 around Virginia, 
+where an earthquake occurred on this day.
+One can see that topics consisting of ordinary and unspecific words can have high proportion values,
+while the earthquake related topics have a relatively low proportion value.}
+\label{T:TopicProportion}
+\end{center}
+\end{table}
+
+
+%\begin{table*}[t]\footnotesize
+%\begin{tabular}{|c|c|c|}
+	%\hline
+	%\multicolumn{3}{|c|}{Number of Iteration Steps in the LDA process}\\
+	%\hline
+	%50 & 300 & 1000 \\
+	%\hline\hline
+	%foursquare pic hall brooklyn & time back night day  & time night nyc day   \\
+	%time night day back  & york ave brooklyn btw  & york ave brooklyn park  \\
+	%newyork nyc tweetmyjobs finance  & pic bar food nyc  & \textbf{foursquare occupywallstreet  mayor ousted} \\
+	%york brooklyn ave street  & \textbf{foursquare occupywallstreet park mayor}  & newyork tweetmyjobs finance citigroup  \\
+	%york ave park btw 	& newyork tweetmyjobs finance citigroup  & \textbf{san gennaro street italy}   \\
+	%\hline
+%\end{tabular}
+%\caption{An example of topic model results depending on the number of iteration steps in the LDA process.
+%The topics are extracted from the Tweets posted in New York City on September 17 and 18, 2011 where the Occupy Wall Street protest movement began and
+%a famous festival, \textit{San Gennaro} occurred.
+%A higher number of sampling iterations provides a better topic retrieval describing the two different events.}
+%\label{T:TopicResults}
+%\end{table*}
+
+Our monitoring component collects space-time indexed Twitter messages using the Twitter-API.
+The received messages are preprocessed and then stored in our local database.
+When users of these services witness or participate in unusual situations 
+they often inform their friends, relatives or the public about their observations.
+%Often when an unusual situation happens 
+%or a controversial issue comes out in a social 
+%environment, 
+%a certain number of messages
+%will be generated about the event or the topic within the social network.
+%it depends on the total number of sampled messages (e.g., a couple of hundreds, thousands or more), 
+%rather than an individual post, 
+%
+If enough users participate, the communication about the situation constitutes a topic that makes up a certain proportion of all messages within the database, or some messages within a predefined area and timespan.
+In most cases, however, the proportion will be smaller than that of other prevalent topics, such as discussions about movies, music, sports or politics.
+In order to extract each of the individual topics exhibited within a collection of social media data, 
+we employ Latent Dirichlet Allocation, a probabilistic topic model that can help organize, understand, and summarize vast amounts of information.
+%The detail of this \textit{topic extraction} is presented in Section~\ref{subsec:topic_extraction}.
+
+The LDA topic model approach, as presented by David Blei et al.~\cite{Blei:2003:LDA}, 
+is a probabilistic and unsupervised machine learning model to identify latent topics and corresponding document clusters from a large document collection.
+Basically, it uses a \textquotedblleft bag of words\textquotedblright approach and assumes that a document exhibits multiple topics 
+distributed over words with a Dirichlet prior. 
+In other words, the LDA assumes the following generative process for each document: 
+First, choose a distribution over topics, choose a topic from the distribution for each word,
+and choose a word associated with the chosen topic.
+Based on this assumption one can now apply a Bayesian inference algorithm to retrieve the topic structure of the message set together with each topic's statistical proportion and a list of keywords prominent within the topic's messages.
+Table~\ref{T:TopicProportion} shows an example set of extracted topics resulting from the application of LDA to Twitter data ordered by the proportion ranking. The example social media data was collected from Twitter for the Virginia area on August 23rd.
+On this day, the area was struck by an earthquake with a magnitude of 5.88.
+As seen in the table, this earthquake event was captured as a topic within the Twitter messages.
+%First, users select a large collection of Twitter messages for a target area and a time period.
+%Given the messages, the LDA topic modeling procedure extracts a set of topics.
+%Each topic is a set of words, which are associated with a corresponding topic.
+% The LDA is a probabilistic and statistical model to identify latent topics from a large 
+% document collection, which was presented as a topic model by David Blei et al.~\cite{Blei:2003:LDA}. 
+% Basically, this topic model assumes that a document exhibits multiple topics 
+% distributed over words in the document.
+% Recently, researchers applied the topic model to social media data to summarize 
+% and categorize Tweets~\cite{Zhao:2011:CTA} and find influential Twitters~\cite{Weng:2010:TFT}. 
+% Zhao et al.~\cite{Zhao:2011:CTA} demonstrate characteristics of Twitter by comparing the content 
+% of Twitter with a traditional news medium like New York Times.
+% They also propose a different Twitter-LDA model and compare the new model with the standard model and 
+% %a different topic model named 
+% with the author-topic model~\cite{Steyvers:2004:PAM}.
+% In the author-topic model, a document is assumed to be a topic mixture by multiple authors.
+% In this work, we use the standard LDA model since a single message is generated by a single user.
+% %~\cite{Weng:2010:TFT, Hong:2010:EST} used the author-topic model to discover topics from Tweets.
+% ParallelTopics~\cite{Wenwen:2011:PAP} also extracts meaningful topics using LDA from a collection of documents.
+% The visual analytics system allows users to interactively analyze temporal patterns of 
+% the multi-topic documents.
+
+In our system, the MALLET toolkit~\cite{McCallum:2002:MALLET} is used for the topic analysis.
+%If not noted otherwise, 20 topics and 1000 iterations were used for the result presented in this work.
+Prior to the topic extraction, the stemming algorithm KSTEM by Krovetz~\cite{Krovetz} is applied to every term in the messages.
+The results of KSTEM are more readable and introduce fewer ambiguities than the often used Porter stemmer.
+
+\begin{table}[ht]%\footnotesize
+\begin{center}
+\begin{tabular}{|c|}
+	\hline
+	Number of Iteration Steps in the LDA process\\
+	\hline
+	50 \\
+	\hline\hline
+	foursquare pic hall brooklyn \\
+	time night day back \\
+	newyork nyc tweetmyjobs finance \\
+	york brooklyn ave street \\
+	york ave park btw \\
+	\hline
+	300 \\
+	\hline\hline
+	time back night day \\
+	york ave brooklyn btw
+	pic bar food nyc \\
+	\textbf{foursquare occupywallstreet park mayor} \\
+	newyork tweetmyjobs finance citigroup \\
+	\hline
+	1000 \\
+	\hline\hline
+	time night nyc day   \\
+	york ave brooklyn park  \\
+	\textbf{foursquare occupywallstreet  mayor ousted} \\
+	newyork tweetmyjobs finance citigroup  \\
+	\textbf{san gennaro street italy}   \\
+	\hline
+\end{tabular}
+\end{center}
+\caption{An example of topic model results depending on the number of iteration steps in the LDA process.
+The topics are extracted from the Tweets posted in New York City on September 17 and 18, 2011 where the Occupy Wall Street protest movement began and
+a famous festival, \textit{San Gennaro} occurred.
+A higher number of sampling iterations provides a better topic retrieval describing the two different events.}
+\label{T:TopicResults}
+\end{table}
+
+For the unsupervised LDA classification and topic retrieval one has to define two parameters: the number of expected topics and the number of iterations for the Gibbs sampling process~\cite{Griff:2004:FST}, which is used in MALLET for the topic inference.
+The number of topics that should be chosen depends on the size of the document collection and the 
+required overview level. A small number of topics (e.g., 10) will provide a broad overview of the documents, whereas
+a large number (e.g., 100) provides fine-grained results.
+The number of sampling iterations is a trade-off between computation time and 
+the quality of discovered topics.
+To illustrate this, Table~\ref{T:TopicResults} shows the experimental results of the topic model using a varying number of sampling iterations while the number of topics was set to four.
+The topics were extracted from Tweets posted in New York City
+on September 17 and 18, 2011, where a large group of protesters occupied Wall Street in New York City. 
+%This event began September 17, 2011.
+A topic indicating the Occupy Wall Street protests can be seen when using at least 300 iterations. At the time of these protests, there was also a famous annual festival, the \textit{San Gennaro}, occurring in Little Italy. This can only be seen when using at least 1000 iterations.
+As shown in Table~\ref{T:TopicResults}, the topics with 50 iterations do not indicate any meaningful events.
+The topics with 300 iterations, on the other hand, consist of more distinguishable classes.
+Finally, the topics with 1000 iterations obviously point out individual events which happened in the city.
+
+
+
+%	foursquare pic hall brooklyn mayor & time back night day people & time night nyc day back  \\
+%	time night day back people & york ave brooklyn btw street & york ave brooklyn park btw \\
+%	newyork nyc tweetmyjobs finance citigroup & pic bar food nyc brunch & foursquare occupywallstreet pic mayor ousted \\
+%	york brooklyn ave street city & foursquare occupywallstreet park mayor island & newyork tweetmyjobs finance citigroup citijobs \\
+%	york ave park btw broadway	& newyork tweetmyjobs finance citigroup citijobs & san gennaro street italy york  \\

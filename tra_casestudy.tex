@@ -1,0 +1,35 @@
+\section{Case Study}
+In this section we demonstrate how our analytics model can assist emergency managers in discovering common/anomalous human movement patterns during crisis events, and how our visual analytics system improves movement analysis for disaster management personnel.
+
+\subsection{Boston Marathon Explosion}
+\label{sec:boston_marathon}
+
+Boston Marathon is an annual marathon held in Greater Boston and one of the world's best-known athletic events.
+On April 15, 2013, two bombs exploded near the finish line during the Boston Marathon at 2:49 pm EDT.
+Figure~\ref{fig:abnormal_movements} shows two markers that indicate the locations of explosions.
+%Three spectators were killed and about 260 people were injured in the bombings.
+The trajectories in Figure~\ref{fig:abnormal_movements} show the movement patterns at the Boston Marathon, where the orange colored trajectories show the movements during the Boston Marathon bombing using Twitter data for the 2 hours after the explosions
+The blue colored trajectories represent the normal movements using the data from next years' Boston Marathon event (we use next year's data for illustrative purposes instead of the previous year's data due to the unavailability of data for the previous year in our database).
+The system utilizes these two trajectories in order to compute the abnormal trajectories (shown in red). 
+%; we use the same time period of the same event in 2014.
+The target trajectories (shown in orange) show that people were dispersed from the locations of the explosions and did not use the road where the accidents occurred.
+Also, the outlier trajectories 1, 2, and 3 in Figure~\ref{fig:abnormal_movements} show that participants and spectators moved in the opposite direction of the finish line or crossed the bridge in order to get away from the location of impact.
+Furthermore, Figure~\ref{fig:keyword_photo} (top) shows the keywords and photos extracted along the trajectory labeled 6 in Figure~\ref{fig:abnormal_movements} (note that the the photos chronologically displayed in the system).
+Since the trajectory is close to the explosion locations, the extracted keywords along the trajectory show a strong relationship to the accident.
+%Users can gain additional insights from the real scene photos which are chronologically ordered.
+%The second and third photos in the first row show the exploding situations and the photos in the second row show the scenes after the explosions.
+The system can thus enable first responders and law enforcement to detect anomalous movements and maintain a situational awareness of an emerging situation in their areas of responsibility. 
+
+%\subsection{Ebola}
+%\subsection{Hurricane Sandy}
+\subsection{Purdue University Shooting}
+On Tuesday, Jan 21st 2014, a shooting occurred inside one of the buildings of Purdue University, Indiana (shown by the marker in Figure~\ref{fig:purdue_shooting}).
+Figure~\ref{fig:purdue_shooting} shows the movement patterns of people around the campus during 2 hours after the incident, where red colored trajectories show anomalous behavior, and orange colored trajectories show the movements during the 2 hours after the incident.
+We compare the movements to the normal movements (blue) extracted from the same time period on another Tuesday.
+We can observe anomalous behavior from the results where people moved to the left or upper-left regions.  Upon further investigation, we find that these locations house student residence halls.
+Only a few people moved around the site of the incident, because of a lock down order given by the police.
+In Figure~\ref{fig:purdue_shooting}, the photos (1) provide a visual context extracted from nearby Tweets of the trajectory (i.e., the scenes around the area and inside buildings).
+The keywords (3) extracted from the selected trajectory convey more information describing the accident.
+The news reports (2) extracted using the keywords along the tracectory (3) allow users to get more detailed information about the event.
+Finally, the video feed (4) enables users to monitor the region in real time. 
+Emergency managers can thus utilize social media as another input information source to maintain a situational awareness using our system.
