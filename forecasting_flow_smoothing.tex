@@ -1,0 +1,114 @@
+\subsection{Flow Smoothing}
+\label{sec:smoothing}
+
+%Smoothing the flows based on the global and local trends
+%After we extract a set of unified vectors to summarize the original flows, we face two major issues to construct the vector field:
+Sparse and noisy flow data often generate non-smooth flow patterns that cannot be used for accurate prediction. In order to mitigate the effect caused by the data sparseness and noise, we propose a new flow smoothing method based on local and global trend estimation. The rationale behind our algorithm is that individuals in a crowd tend to follow dominant paths of the crowd~\cite{Kok:2015:Crowd}. 
+%In flow analysis, if the data has a high degree of sparse and noise, it will cause broken and non-smooth flow patterns.
+%Also, it is also highly likely that inaccurate predicted results will be suggested.
+
+%The key idea behind our method is that individuals in a crowd tend to follow dominant paths of the crowd~\cite{Kok:2015:Crowd}.
+In our algorithms, for each sub-space, we adjust directional density with consideration of neighbor sub-spaces' trends and a global movement that considers the entire space. 
+%Figure~\ref{fig:smoothing} illustrates the main idea of our smoothing approach.
+%For this, we define local neighbor sub-spaces of $sp_i$  
+% $N(sp_i) = \left\{sp_j \in \Omega \ |\ sp_j\ is\ adjacent\ to\ sp_i\right\}$. 
+First, local neighbor sub-spaces of $sp_i$ is defined by $N(sp_i) = \left\{sp_j \in \Omega \ |\ sp_j\ is\ adjacent\ to\ sp_i\right\}$ and  the local directional trend of $sp_i$ is computed using the neighbor representative vectors $\mathcal{R}_{sp_j}$, $sp_j \in N(sp_i)$. %Figure~\ref{fig:smoothing} (A) shows the neighbors (gray) of the center sub-space (white).
+
+Next, we define the global movement of a sub-space as a major movement of a larger space including the sub-space.
+%As described in the previous section, each sub-space will have a set of representative vectors $\mathcal{R}_{sp_i}$ representing its directional density. 
+In order to compute a global trend, we extract the major movements from the trajectories of the entire space using a density-based trajectory clustering algorithm~\cite{Lee:2007:Trajectory}.
+Figure~\ref{fig:smoothing} (A) shows an example computation process. Here, the representative vectors $\mathcal{R}_{centerSpace}$ of the center sub-space are almost evenly distributed in multiple directions before smoothing but the major local and global trends move toward the bottom-right. Thus, after smoothing based on the trends, the vector $V_4 \in \mathcal{R}_{centerSpace}$ heading toward the bottom-right becomes a major vector.
+
+The next question is that which sub-spaces should be affected by the global trend since there is uncertainty in the influence of a global trend. Therefore, we assume that the sub-spaces that are close to the global trend are more affected than the ones more distant. Figure~\ref{fig:smoothing} (B) shows how we classify the sub-spaces where dark gray sub-spaces are more influenced by the global trend than the light gray ones that are the neighbors of the dark gray ones. The white sub-spaces are not within the influence area.
+
+As shown in Algorithm~\ref{alg:smoothing}, all sub-spaces are visited in our algorithm to perform individual smoothing operations (line 1, 2). In each visit, the average magnitude is computed with consideration of the neighbor sub-spaces (line 3-12).  
+%For each sub-space, the algorithm applies the smoothing operations to the individual sectors independently (line 2).
+%For each sector, the algorithm calculates the average magnitude of the same sectors at the neighbor sub-spaces (line 3-12).
+Then, our algorithm computes interpolation based on original magnitude of $sp_i$, the average magnitude of neighbor sub-spaces, and the global magnitude based on a local smoothing parameter $\lambda$ and a global smoothing parameter $\tau$ (line 13-18). Finally, the algorithm updates the magnitude of each sector for each sub-space based on the interpolation results. 
+
+Figure~\ref{fig:taxi_glyph} shows the local and the global directional densities trends of taxi movements with our glyph-based visualization in southern Manhattan during in the morning on May 24th, 2013.
+Each sub-space has a set of arrows where each arrow indicates the corresponding representative vector.
+The orange long arrow represents the global movement in the area.
+The yellow lines are actual taxi trajectories.
+We will explain details of the data in Section~\ref{sec:case_study}.
+The local directional densities and the global movement move toward bottom-left, as the observed time window is in the morning.
+Figure~\ref{fig:smoothdemo} shows an example smoothing result where the directional density of the sub-space $A$ changes along the local directional trend. Note that before the smoothing process is performed, the sub-space $B$ did not have the directional density due to data sparseness. After smoothing, it has one accommodating the local directional trend.
+
+
+%We define the global movement of a sub-space as a unit vector.
+
+%We extract the major movements by clustering the trajectories of the entire space.
+
+
+\begin{algorithm}[tbh]\footnotesize
+\algsetup{linenosize=\footnotesize}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+		
+    \Input{(1) $\Omega = \left\{sp_1, \cdots, sp_n\right\}$ \\
+					 (2) Global vector of $sp_i \enspace G_{sp_i} $ \\
+					 (3) A local smoothing parameter $\lambda$ \\%(0 \leq \lambda \leq 1)$ \\
+					 (4) A global smoothing parameter $\tau$ \\ %(0 \leq \tau \leq 1)$
+					Note: $(0 \leq \lambda + \tau \leq 1)$
+					}
+    \Output{Smoothed flow of each sub-space}
+		
+		\tcc{For each sub-space, smooth its directional density}
+    \For{\textbf{each} $sp_i \in \Omega$}{
+			\tcc{For each sector, adjust its magnitude based on the local and global directional trends}
+			\For{$k = 1$ to $S$}{
+				\textbf{let} $avgNeighborMag = 0$ \\
+				\textbf{let} $numNeighbor = 0$ \\
+				\tcc{For each neighbor sub-space of $sp_i$}
+				\For{\textbf{each} $sp_j \in N(sp_i)$}{
+					$m = M(V_k)$, $V_k \in \mathcal{R}_{sp_j}$ \\
+					\If{($m > 0$)}{
+						$avgNeighborMag = avgNeighborMag + m$ \\
+						$numNeighbor = numNeighbor + 1$
+					}
+				}
+				$avgNeighborMag = avgNeighborMag / numNeighbor$ \\
+				$originalMag = M(V_k), V_k \in \mathcal{R}_{sp_i}$ \\
+				\tcc{Update the original magnitude}
+				\eIf{($D(G_{sp_i})$ is in sector k)}{
+					$originalMag = (1 - \lambda - \tau) \times originalMag + \lambda \times avgNeighborMag + \tau \times M(G_{sp_i})$
+				}{
+					$originalMag = (1 - \lambda) \times originalMag + \lambda \times avgNeighborMag$
+				}
+			}
+		}
+		
+		%$tolerance\leftarrow t$ \tcp{Initialize temporal tolerance.}
+		%
+		%\tcp{Loop the user list and calculate the suspicious scores.}
+		%\For{each user $u_i$}{
+			%\For{each timestamp $t_j$}{
+				%\If{$u_i$ posted at least one message in the time range [$t_j$ $\pm$ tolerance]}{
+					%$score[u_i]\leftarrow score[u_i]+1$
+				%}
+			%}
+		%}
+    \caption{Flow Smoothing}
+		\label{alg:smoothing}
+\end{algorithm}
+
+
+
+%
+%\begin{itemize}
+  %\item Some grids do not have summarized vectors, due to the data sparseness.
+  %\item The vector fields are not smooth[need rephrase here].
+%\end{itemize}
+
+%In order to address the two issues, we apply smoothing to the vector field by utilizing both global flow trends and local flow trends.
+
+
+%
+%\textbf{Smoothing based on global trends:}
+%
+%\textbf{Smoothing based on local trends:} In order to perform smoothing based on local trends, for each grid, we consider the neighbor grids. 
+%For example, in the matrix of fixed-size rectangular grids, we utilize the 8 neighbor grids for smoothing. 
+%We apply a simple yet effective smoothing operation based on the idea of linear interpolation.
+%The details are shown in the following formula.
+%
+%***FORMULA HERE***

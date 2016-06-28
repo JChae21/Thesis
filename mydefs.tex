@@ -14,15 +14,15 @@
 % Define \Repeat so, for example,
 %     \Repeat{whatever}{10}
 % is the same as typing whatever 10 times.
-\newcount{\myi}
-\newcommand{\Repeat}[2]{%
-    \myi=0
-    \loop
-        \ifnum\myi<#2
-        #1
-        \advance\myi by 1
-    \repeat
-}
+%\newcount{\myi}
+%\newcommand{\Repeat}[2]{%
+    %\myi=0
+    %\loop
+        %\ifnum\myi<#2
+        %#1
+        %\advance\myi by 1
+    %\repeat
+%}
 
 % CHANGE NEXT 3 LINES?
 % Make "\Sum ab" or "\Sum{a}{b}" do "\sum_{a}^{b}".

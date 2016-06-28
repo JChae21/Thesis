@@ -1,0 +1,78 @@
+\subsection{Directional Density Estimation}
+\label{sec:discretization}
+
+%For a given space defined over a domain $\Omega\subset \mathbb{R}^{2}$ in which a large number of trajectories of a specific time window are embedded, we split $\Omega$ into small sub-spaces $\Omega = \left\{sp_1, \cdots, sp_n\right\}$ and estimate the directional density representing the directions of the movements of each sub-space.
+
+%For a given space in which a large number of trajectories are embedded, 
+
+%We discretize the space $SP$ through a uniform grid with cells of a specific size.
+%The size depends on the area and the zoom level.
+%For each cell, we transform the sub-part of each trajectory passing through the cell boundary into Euclidean vectors.
+%In order to compute directional density estimation, 
+
+Given a set of trajectories 
+$TR = \left\{ tr_1, \cdots, tr_{num-tra}\right\}$ 
+for a specific time window $t$,
+%In this step, 
+we equally divide a space 
+$\Omega\subset \mathbb{R}^{2}$ 
+into smaller sub-spaces
+$\Omega = \left\{sp_1, \cdots, sp_{num-spa}\right\}$.
+%after a set of trajectories 
+%$TR = \left\{ tr_1, \cdots, tr_{num-tra}\right\}$ 
+%for a specific time window $t$ are projected.
+We then estimate the directional density for each sub-space that represents the overall movement direction for each sub-space using the following methodology (Figure~\ref{fig:segment}).
+%through a uniform grid with resolution $R$.
+For each sub-space $sp_i$, we first segment the individual trajectories $tr_i$ that occur in each sub-space grid by checking the crossing points of the trajectory segments at the boundary.
+Figure~\ref{fig:segment} (A) shows the result of this process where six points (highlighted in red) are detected and are assigned to be either the start or end locations for each segment that passes through the grid (highlighted in blue). 
+These points are used to identify partial trajectories (i.e., sub-trajectories) for a trajectory $tr_i$.
+Next, we transform the sub-trajectories into a Euclidean vector space $\vec{v_i}$ and translate the start points and end points in the space to align with the center location of the sub-space. That is, the starting points of the sub-trajectories within the sub-space are located at the center of the sub-space (Figure~\ref{fig:segment}~(B)).
+% where the start points are translated to the center of the grid and the end points are also translated as much as the start points (see Figure~\ref{fig:segment} (B)).
+%we whose start points are translated to the center of the grid.
+%Note that after this step, the segmented sub-trajectories share one single origin point at the center of the space as shown in Figure~\ref{fig:segment} (B).
+
+%to have  so each segment is contained on a cell of the grid (see Figure~\ref{fig:segment} (A)).
+%Then, we transform the sub-trajectories of $tr_j$ passing through the cell into Euclidean vectors $v_j$ with the same origin point (the center of the cell) (see Figure~\ref{fig:segment} (B)).
+
+The next step in our approach is to summarize these vectors in order to generate meaningful representative movement vectors for each sub-space.
+The conventional approach of summarizing vectors includes performing computations (e.g., average, addition) over the entire space. 
+However, this approach is often not optimal in generating representative movement vectors as the final summary vectors could be meaningless.
+For example, if we have two same magnitude but opposite direction vectors, they will cancel each other out to yield a zero resultant vector. 
+Accordingly, there is a need to preserve meaningful vectors after summarization.
+%Next, we summarize the vectors to estimate the directional density of the cell.
+%The traditional methods for the summary of vectors, vector addition, vector average, and spherical linear interpolation have a limitation. For example, when the directions of the vectors with similar magnitude are evenly distributed, it results in a small average vector with a meaningless direction.
+Our approach is designed in order to help preserve the original directions of the vectors. 
+For each sub-space, we divide one full turn (360\degree) into $S$ circular sectors of the same size. % (Figure~\ref{fig:segment}~(B)).
+For demonstration, we use 8 sectors (i.e., $S=8$) as default configuration in Figure~\ref{fig:segment}~(B), where each sector covers a~45\degree region. %~\textemdash the first sector is from 0\degree to 45\degree in clockwise. 
+%Next, we group the vectors $\vec{v_i}$ into their corresponding sectors. 
+For each sector $k$ (where $k = 1,\cdots,S$), 
+we generate a representative vector $\vec{V_k}$ by aggregating the corresponding vectors $\vec{v_i}$ within the sector $k$ (as demonstrated in Figure~\ref{fig:segment}~(C)).
+%a cluster vector, 
+%We aggregate the vectors in each sector and generate a representative vector $\vec{V_j}$ for the sector $j$ as a cluster of the vectors where 
+The magnitude $M(\vec{V_k})$ of the representative vector for each sector is the sum of magnitudes of the vectors ($M(\vec{v})$) that belong to the corresponding sector.
+The direction $D(\vec{V_k})$ of the representative vector for each sector is the angle calculated from the WHAT AXIS.
+%evenly divide the corresponding sector and its magnitude is the sum of magnitudes of the vectors belong to the sector as shown in Figure~\ref{fig:segment} (C). 
+%Here, let $M(\vec{v})$ and $D(\vec{v})$ denote the magnitude and the direction of the vector $\vec{v}$, respectively. 
+%For example, the vectors $\vec{v_2}$ and $\vec{v_4}$ belong to the sector 5, $M(\vec{V_5})$ is $M(\vec{v_2}) + M(\vec{v_4})$ and $D(\vec{V_5})$ is 202.5\degree.
+In this way, each sub-space will have a set of $S$~representative vectors $\mathcal{R}_{sp_i} = \left\{\vec{V_1}, \cdots, \vec{V_S}\right\}$. 
+The representative vectors encode the directional density of a sub-space, and summarize the directions of flow for each individual sub-space.
+
+
+%Each grid cell will have its directional distribution of the trajectories passing the cell (see Figure~\ref{fig:segment} (B)).
+
+%In order to generate the 2 dimensional vector field, we firstly partition the 2 dimensional space into a matrix of fixed-size rectangular grids.
+%We choose X by X pixels as the default grid size.
+%Then we segment each individual trajectory based on the grid boundary, Figure X(a).
+%As a result, each grid is associated with a series of trajectory segments which are inside the grid, Figure X(b).
+%After we extract the trajectory segments, we simplify the segments as 2 dimensional vectors.
+%We record the directionality and magnitude of the vectors and utilize the information to generate the vector field, as described in the following section.
+
+
+%\subsection{Multiple Vector Fields: Original Direction Preserving}
+
+%Computing multiple vector fields for original direction preserving
+%In order to summarize major movement flows in each individual grid, we propose a straight-forward clustering approach to cluster the vectors in each grid. 
+%We equally divide one full turn (360) into multiple circular sectors(we choose 8 as the default value), and classify each vector into one of the sectors according to its direction. 
+%The magnitude of this vector is the summation of all vectors associated with this sector.
+%
+%Based on the above-mentioned clustering approach, we summarize the movement flow patterns based on a set of unified vectors across all spatial grids. The magnitude of the vector represents the volume(or strength) of the flow corresponding to this specific direction.

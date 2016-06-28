@@ -1,0 +1,116 @@
+\chapter{Forecasting the Flow of Human Crowds}
+
+\begin{figure}[tb]
+	\centering
+	\includegraphics[width=1.0\columnwidth]{discretization}
+	\caption{Trajectory tessellation and directional density estimation}
+	\label{fig:segment}
+	%\vspace{-0.7cm}
+\end{figure}
+
+Forecasting human crowd flows plays a significant role in a range of applications, from urban and traffic planning~\cite{Wei:2012:CPR, Zheng:2011:UCW} to predicting epidemic dynamics~\cite{Dalziel:2013:Human, Eubank:2004:Modelling}.
+Various location-based services are also highly dependent on foreseeing human movement patterns~\cite{Bao:2012:Location}.
+The volume and variety of data that capture the different aspects of human mobility have greatly increased due to ubiquitous crowdsourced activities and the advent of several location-based social networking services.
+The potential impacts and availability of such data have caught the attention of researchers from various domains.
+They have put considerable efforts into understanding and predicting human mobility patterns~\cite{Gonzalez:2008:UIH,Xue:2013:Destination,Ying:2011:Semantic}.
+They have also discovered that human mobility behaviors can contain discernible patterns that can be used for forecasting purposes. 
+For example, Song et al.~\cite{Song:2010:Limits} reported a 93\% potential predictability in human mobility from anonymized mobile phone data, and although the overall travel patterns were vastly different, the variability in predictability was found to be significantly low. 
+
+Many previous techniques for predicting human movements have treated the individual mobility behaviors as discrete entities and focused on predicting the next destinations of the individuals based on the observations of their past movement patterns or frequent behaviors of similar users~\cite{Monreale:2009:Wherenext,Xue:2013:Destination,Ying:2011:Semantic}.
+While recent work has made progress in predicting human mobility patterns, the proposed models that are based on movements of individuals suffer from many limitations.
+%For example, these approaches do not consider the flows (i.e., aggregate movements) as a whole --NOT SURE WHAT THIS MEANS; SUGGEST REMOVE THIS SENTENCE -AM.
+For example, the data modeling techniques used in these methods (e.g., Hidden Markov Model) typically require extensive training of the data models using historical observed data~\cite{Mathew:2012:Predicting,Xue:2013:Destination}. 
+This process can be expensive and rate limiting, especially in case of large scale datasets (e.g., taxi data in large urban regions), and can further severely restrict interactive visual analytic system behaviors.
+%If they need to deal with a large-scale training data set (e.g., taxi trips in a large urban area), the computation cost should highly increase.
+Other 
+%issues related to utilizing individual trajectory mining techniques for forecasting purposes 
+challenges 
+include privacy concerns for the individuals~\cite{Monreale:2010:Movement,Xue:2013:Destination}.
+Furthermore, the individual spatial sequence trajectory datasets, especially those derived from location-based social networks, can also suffer from data sparsity and noise problems~\cite{Wei:2012:Constructing,Wang:2014:Visual}.
+%Particularly the paths extracted from location-based social networks have a high degree of sparsity and noise.
+%These limitations can disconnect the continuous flows.
+These can often prove to be prohibitive for accurate data modeling.
+Standard methods to mitigate for these challenges include clustering techniques that summarize the overall movement paths in trajectory data analysis.
+These require analysts to carefully select appropriate abstraction levels for clustering in order to prevent the original vector flow data from getting distorted. 
+%if an abstraction level that is too high is used for clustering, the original paths and directions get distorted, resulting in inaccurate results.
+%Finally, most of the previous work in data mining and knowledge discovery areas do not concern visualizing and exploring the predicted movements.
+However, when these abstraction levels are carefully chosen, the analysis of collective flows of human crowds can provide new insights that may not be available at finer granularity levels~\cite{Andrienko:2013:Visual, Hughes:2003:Flow}.
+
+To this end, this paper presents a space-based approach for forecasting the flow of human crowds.
+%We also provide an interactive visual analytics environment which enables effective exploration of the predicted results and further analysis~\cite{Andrienko:2013:Visual,Laube:2014:Computational}.
+Our work is motivated by weather simulation and forecasting modeling techniques that are built using local atmospheric observations from weather stations. 
+%using the values at locations (usually evenly spaced grid) 
+%and then generate an atmospheric simulation for a forecast.
+In this work, we embed individual movements into a two-dimensional (2D) Euclidean space and model for the space instead of the moving objects.
+In other words, given a space with a large number of moving objects, we discretize the space into smaller sub-spaces and model the movement flows for each sub-space.
+Our model forecasts the future flow based on observed historical patterns of each sub-space using a seasonal trend analysis technique~\cite{Cleveland:1990:SAS}. 
+We then combine the results to visualize the future flow as a whole for the entire space.
+%Our approach does not highly depend on the volume of moving objects.
+Our approach consists of a directional flow density estimation method that preserves the original paths and directions of moving entities, and a flow smoothing method based on both local and global trajectory trends to mitigate for the data sparseness and noise issues.
+We also provide a novel visualization technique for showing the probability density distribution of flow.
+% [IS IT NOVEL? -AM].
+We demonstrate our work using location-based social media data and GPS tracking human and taxi data.
+% [IS THIS CORRECT?]. 
+
+The main contributions of this work include the following:
+
+\begin{itemize}
+	\item We apply a new method to estimate the directional flow density that represents the overall movement direction and preserves the original paths and directions of moving entities.
+	\item We develop a new flow smoothing method based on both local and global movement trends for improving forecast accuracy by mitigate the effect of the data sparsity and noise.
+	\item We propose a new model to forecast vector field data with the seasonal-trend decomposition technique (STL) by transforming data to a series of magnitude values from the smoothed representative vectors.
+	\item We develop a new flow visualization technique of multi-vector fields for the directional flow density in order to expose the uncertainty of the vector field.
+\end{itemize}
+
+
+
+
+\begin{figure}[tb]
+	\centering
+	\includegraphics[width=1.0\columnwidth]{smoothing}
+	\caption{Each space's directional density is computed based on its neighbors' and global trends. }
+	\label{fig:smoothing}
+	%\vspace{-0.7cm}
+\end{figure}
+
+%
+%an interactive visual analytics environment which enables effective exploration of the predicted results.
+%
+%Our approach enables ...
+%Visualization of future flow of human crowds
+%Our visualization is able to represent not only major flow, but also minor 
+
+
+%In this work, our model embeds trajectory data in a two-dimensional (2D) space and then splits the space into discrete grid cells 
+%%location entities.
+%%We discretize the space through a uniform grid with cells of a specific size.
+%%The size depends on the area and the zoom level.
+%%For each cell, we transform the sub-part of each trajectory passing through the cell boundary into Euclidean vectors.
+%For each cell, we transform the trajectories passing through the cell boundary into Euclidean vectors.
+%Then, we summarize the vectors.
+%The traditional methods for the summary of vectors, vector addition, vector average, and spherical linear interpolation have a limitation, which results in a small average vector with a meaningless direction when the directions of the vectors with similar magnitude are evenly distributed.
+%Our approach is designed as a best-effort method for preserving the original directions of the vectors.
+%We divide one full turn (360\degree) into multiple sectors of a same size and then classify each vector into one of the sectors according to its direction.
+%Each grid cell will have its directional distribution of the trajectories passing the cell (see Figure~\ref{fig:segment} (B)).
+%Then, our model smooths the directional distribution based on local and global trends.
+%We adjust the directional distribution of each cell based on the ones of its adjacent neighbor cells and the direction of the global movement around the cell.
+%Individual in a crowd tends to follow dominant paths of the crowd~\cite{Kok:2015:Crowd}.
+%Our model creates a vector field in the plane consisting of location points with multiple vectors calculated using the directional distributions at each location (see Figure~\ref{fig:segment} (C)).
+%Next, We creates a series of vector fields for past time intervals and then predict the future vector fields based on the past vector fields.
+%In other words, our model forecasts the future directional distribution of a specific location based on the past ones of the same location using a statistical forecasting technique.
+%Then, it repeats the same procedure on each location to create the future vector fields.
+%Finally, we visualize the vector fields using particle tracing, a standard flow visualization technique, for representing the future flow of human crowds.
+
+
+\input{forecasting_model}
+\input{forecasting_discretization}
+\input{forecasting_flow_smoothing}
+\input{forecasting_stl}
+\input{forecasting_flow_visualization}
+\input{forecasting_casestudy}
+\input{forecasting_evaluation}
+\input{forecasting_conclusion}
+
+
+
+
+
